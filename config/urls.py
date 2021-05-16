@@ -16,7 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from config.settings import MEDIA_URL, MEDIA_ROOT
+from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from .views import signup
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('news/', include("news.urls"))
-]
+    path('news/', include("news.urls")),
+    path('reader/', include("reader.urls")),
+    path('signup/', signup, name="signup"),
+    path('accounts/', include('django.contrib.auth.urls')),
+] + static(MEDIA_URL, document_root=MEDIA_ROOT)
+
+urlpatterns += staticfiles_urlpatterns()
