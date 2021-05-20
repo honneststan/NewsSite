@@ -1,6 +1,5 @@
 from django import forms
 from .models import News
-from reader.models import Reader
 
 
 class CreateNewsForm(forms.ModelForm):
@@ -15,7 +14,3 @@ class UpdateNewsForm(forms.ModelForm):
         exclude = ('views', 'news_instance')
 
 
-class UpdateProfileForm(forms.ModelForm):
-    class Meta:
-        model = Reader
-        exclude = ('is_author',)

@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
-from .forms import CreateNewsForm, UpdateNewsForm, UpdateProfileForm
+from .forms import CreateNewsForm, UpdateNewsForm
 from .models import News
-from reader.models import Reader
 
 
 # Create your views here.
@@ -67,24 +66,3 @@ def view_news(request, pk):
     return render(request, "news/view.html", context)
 
 
-def update_profile(request):
-    required_reader = Reader.objects.get(id=request.user.id)
-    if request.method == "POST":
-        form = UpdateProfileForm(instance=required_reader, data=request.POST, files=request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('news:view-profile')
-    else:
-        form = UpdateProfileForm(instance=required_reader)
-    context = {
-        'form': form
-    }
-    return render(request, "profile/update.html", context)
-
-
-def view_profile(request):
-    required_reader = Reader.objects.get(id=request.user.id)
-    context = {
-        'reader': required_reader
-    }
-    return render(request, "profile/view.html", context)
