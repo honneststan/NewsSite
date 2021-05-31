@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import create_news, read_news, update_news, delete_news, view_news
+from .views import create_news, read_news, update_news, delete_news, view_news, webscrap_news
 
 from config.settings import MEDIA_URL, MEDIA_ROOT
 from django.conf.urls.static import static
@@ -12,6 +12,7 @@ urlpatterns = [
     path("update/<int:pk>", update_news, name="update-news"),
     path("delete/<int:pk>", delete_news, name="delete-news"),
     path("view/<int:pk>", view_news, name="view-news"),
+    path("webscrap", webscrap_news, name="webscrap-news"),
 
 ] + static(MEDIA_URL, document_root=MEDIA_ROOT)
 

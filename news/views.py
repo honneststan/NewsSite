@@ -1,6 +1,10 @@
 from django.shortcuts import render, redirect
 from .forms import CreateNewsForm, UpdateNewsForm
 from .models import News
+from .webscrapers import baahrakhari_webscraping
+from .webscrapers import ekantipur_webscraping
+from .webscrapers import gorkhapatraonline_webscraping
+from .webscrapers import onlinekhabar_webscraping
 
 
 # Create your views here.
@@ -64,5 +68,21 @@ def view_news(request, pk):
         "news": required_news
     }
     return render(request, "news/view.html", context)
+
+
+def webscrap_news(request):
+    baahrakhari_newses = baahrakhari_webscraping.baahrakhari_list_webscraping()
+    ekantipur_newses = ekantipur_webscraping.ekantipur_list_webscraping()
+    gorkhapatraonline_newses = gorkhapatraonline_webscraping.gorkhapatraonline_list_webscraping()
+    onlinekhabar_newses = onlinekhabar_webscraping.onlinekhabar_list_webscraping()
+    newses = baahrakhari_newses + ekantipur_newses + gorkhapatraonline_newses + onlinekhabar_newses
+    for news in newses:
+        registered_news = News.objects.create(title=news[0], image=news[1], source=news[2], description=news[3])
+        registered_news.save()
+    registered_newses = News.objects.all()
+    context ={
+        "newses": registered_newses
+    }
+    return render(request, "news/webscrap.html", context)
 
 
