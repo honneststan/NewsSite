@@ -13,6 +13,12 @@ Source: {{news.source}}<br>
 Tags: {{news.tags}}<br>
 Views: {{news.views}}<br>
 Instance: {{news.news_instance}}<br>
+Positive: {{positive}}<br>
+Negative: {{negative}}<br>
+Neutral: {{neutral}}<br>
+Polarity: {{polarity}}<br>
+Converted Title: {{converted_title}}<br>
+Converted Description: {{converted_description}}<br>
 {% if request.user.is_superuser %}
 <a href="{% url 'news:update-news' news.id %}">Update</a>
 <a href="{% url 'news:delete-news' news.id %}">Delete</a>

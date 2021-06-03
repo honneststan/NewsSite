@@ -5,7 +5,9 @@ from .webscrapers import baahrakhari_webscraping
 from .webscrapers import ekantipur_webscraping
 from .webscrapers import gorkhapatraonline_webscraping
 from .webscrapers import onlinekhabar_webscraping
-
+from .sentiment_analyzers import sentiment_intensity_analyzer
+from .sentiment_analyzers import textblob_sentiment_analyzer
+from .google_translation import google_translation
 
 # Create your views here.
 def create_news(request):
@@ -64,8 +66,18 @@ def delete_news(request, pk):
 
 def view_news(request, pk):
     required_news = News.objects.get(id=pk)
+    converted_title = google_translation.ArticleConversion(required_news.title)
+    converted_description = google_translation.ArticleConversion(required_news.description)
+    sia = sentiment_intensity_analyzer.sentiment_analyzer(converted_description)
+    # tsa = textblob_sentiment_analyzer.textblob_sentiment_analyzer(converted_text)
     context = {
-        "news": required_news
+        "news": required_news,
+        "converted_title": converted_title,
+        "converted_description": converted_description,
+        "positive": sia[0],
+        "negative": sia[1],
+        "neutral": sia[2],
+        "polarity": sia[3]
     }
     return render(request, "news/view.html", context)
 

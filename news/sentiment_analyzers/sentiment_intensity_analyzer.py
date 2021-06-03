@@ -1,17 +1,6 @@
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
-
-
-def sentiment_analyzer(sentiment_text):
-    score = SentimentIntensityAnalyzer().polarity_scores(sentiment_text)
-    print(score)
-    neg = score['neg']
-    pos = score['pos']
-    if pos > neg:
-        polarity = "Positive Statement"
-    elif pos < neg:
-        polarity = "Negative Statement"
-    else:
-        polarity = "Neutral Vibe"
+import nltk
+nltk.download('vader_lexicon')
 
 
 def sentiment_analyzer(sentiment_text):
