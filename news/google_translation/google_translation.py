@@ -1,4 +1,10 @@
+from googletrans import Translator
 from google_trans_new import google_translator
+
+
+def LanguageConversionGT(content):
+    translatorGT = Translator()
+    return (translatorGT.translate(content)).text
 
 
 def LanguageConversionGTN(content):
